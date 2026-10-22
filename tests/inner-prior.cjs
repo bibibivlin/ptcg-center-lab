@@ -22,7 +22,9 @@ for(const margins of [[8,12,10,10],[6,14,4,16],[24,36,26,34]]){
 }
 const custom={profile:'custom',width:1-46/cw,height:1-62/ch},margins=[17,29,23,39],customResult=detect(margins,{},custom);
 assert.ok(Math.abs(customResult.m.lr-17/46*100)<1.5);assert.ok(Math.abs(customResult.m.tb-23/62*100)<1.5);
-const partial=detect([10,10,10,10],{noTop:true});assert.deepEqual(partial.result.estimatedEdges,[0]);assert.ok(partial.result.edgeQuality.slice(1).every(v=>v>70));
+const partial=detect([10,10,10,10],{noTop:true});assert.deepEqual(partial.result.estimatedEdges,[0,1,2,3]);assert.equal(partial.result.innerSource,'estimated-centered');assert.ok(Math.abs(partial.m.lr-50)<1e-8);assert.ok(Math.abs(partial.m.tb-50)<1e-8);assert.equal(partial.result.reference.width,.92);
 const absent=detect([10,10,10,10],{blank:true});assert.deepEqual(absent.result.estimatedEdges,[0,1,2,3]);assert.equal(absent.result.quality,0);
+const customFallback=detect(margins,{blank:true},custom);assert.equal(customFallback.result.reference.width,custom.width);assert.ok(Math.abs(customFallback.m.borders.left-23)<1e-8);
+const warped=G.edgePoints([{x:130,y:80},{x:730,y:130},{x:690,y:1000},{x:80,y:930}]),estimated=D.estimateInner(warped),measurement=G.measure(warped,estimated.inner);assert.ok(Math.abs(measurement.lr-50)<1e-8);assert.ok(Math.abs(measurement.tb-50)<1e-8);
 assert.throws(()=>detect([10,10,10,10],{},{profile:'custom',width:1,height:.95}),/75%/);
-console.log(JSON.stringify({passed:true,tests:['narrow frame despite stronger art rectangle','off-center print remains asymmetric','regular frame proportions','custom theoretical dimensions','one missing side preserves three detected sides','missing edges labeled as estimates','invalid theoretical ratio rejected'],cases},null,2));
+console.log(JSON.stringify({passed:true,tests:['narrow frame despite stronger art rectangle','off-center print remains asymmetric','regular frame proportions','custom theoretical dimensions','one missing side produces a complete centered estimate','missing edges labeled as estimates','invalid theoretical ratio rejected'],cases},null,2));

@@ -5,3 +5,6 @@ Thumbs.db
 *.log
 .env
 .env.*
+
+# Local reference photographs; never publish card images.
+sample/
