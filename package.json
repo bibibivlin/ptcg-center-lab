@@ -1,0 +1,21 @@
+{
+  "name": "ptcg-center-lab",
+  "version": "1.0.0",
+  "description": "Original-resolution PTCG card centering measurement with eight-point edge calibration, ratio-guided detection, and clean perspective-corrected PNG export.",
+  "license": "MIT",
+  "author": "Lin Yucan (bibibivlin)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bibibivlin/ptcg-center-lab.git"
+  },
+  "homepage": "https://bibibivlin.github.io/ptcg-center-lab/",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node tools/serve.cjs",
+    "check": "node tools/check-static.cjs",
+    "test": "node tools/test.cjs",
+    "build": "node tools/build-standalone.cjs"
+  }
+}
